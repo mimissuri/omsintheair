@@ -7,7 +7,8 @@
 
 > All software used on the OmsInTheAir project
 
-### ✨ [Demo](http://demos.omsintheair.ml)
+### [Website](http://omsintheair.ml)
+### [Demo](http://demos.omsintheair.ml)
 
 ## Install
 
