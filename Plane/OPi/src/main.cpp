@@ -1,7 +1,7 @@
 //============================================================================
 // Name        : Omsintheair
 // Author      : Adam El Messaoudi
-// Version     : 0.0.1
+// Version     : In development
 // Copyright   : -
 // Description : Hello World in C++, Ansi-style
 // ANCHOR - Used to indicate a section in your file
@@ -20,9 +20,9 @@
 #include <ctime>
 #include <unistd.h>
 #include <fstream>
+#include "log.cpp"
 // ANCHOR La cosa aquella que no se com es diu
 using namespace std;
-
 
 // SECTION Variables
 

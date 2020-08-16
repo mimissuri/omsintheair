@@ -1,0 +1,8 @@
+.vscode
+Plane/.vscode
+Base/.vscode
+Base/node_modules
+Plane/RPi/__pycache__
+Plane/RPi/log
+Plane/OPi/src/main
+Plane/OPi/logs
