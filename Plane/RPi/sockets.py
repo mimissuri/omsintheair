@@ -1,4 +1,3 @@
-import asyncio
 import time
 import socketio
 
@@ -11,6 +10,7 @@ g.sio = socketio.Client()
 @g.sio.event
 def connect():
     log.log("Connected to server")
+    g.connected = True
 
 
 @g.sio.event
@@ -24,17 +24,19 @@ def disconnect():
     g.connected = False
 
 
-@g.sio.on("login")
+@g.sio.on("phase")
 def on_message(data):
-    log.log(data)
+    g.phase = int(data)
+    log.log("Changed to phase: " + str(g.phase))
 
 
 def connect_server():
     g.sio.connect(g.sip)
 
 
-def emit(id, arg):
+def emit(rid, rarg):
     if g.connected:
-        g.sio.emit(id, arg)
+        log.log("Emiting on " + rid + " with values: " + str(rarg))
+        g.sio.emit(rid, rarg)
     else:
         return False

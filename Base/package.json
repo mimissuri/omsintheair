@@ -1,0 +1,21 @@
+{
+  "name": "baseproba",
+  "version": "1.0.0",
+  "description": "Creador de servido amb socket.io",
+  "main": "main.js",
+  "scripts": {
+    "test": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adamthecro/omsintheair/tree/master/Base"
+  },
+  "keywords": [
+    "omsintheair"
+  ],
+  "author": "Adam El Messaoudi",
+  "license": "MIT",
+  "dependencies": {
+    "socket.io": "^2.3.0"
+  }
+}
