@@ -1,21 +1,26 @@
 {
-  "name": "baseproba",
+  "name": "electron-quick-start",
   "version": "1.0.0",
-  "description": "Creador de servido amb socket.io",
+  "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "test": "node main.js"
+    "start": "electron ."
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/adamthecro/omsintheair/tree/master/Base"
-  },
+  "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
-    "omsintheair"
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
   ],
-  "author": "Adam El Messaoudi",
-  "license": "MIT",
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^9.2.0"
+  },
   "dependencies": {
+    "jquery": "^3.5.1",
     "socket.io": "^2.3.0"
   }
 }

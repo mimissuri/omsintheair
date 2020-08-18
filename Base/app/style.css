@@ -1,0 +1,158 @@
+body {
+    font-family: "Montserrat";
+    margin: 0 0;
+    user-select: none;
+    background: #fff;
+}
+
+.alcentre {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    width: 100%;
+    height: 100vh;
+}
+
+.topbar {
+    height: 1vh;
+    width: 100vw;
+
+    background: rgb(43, 46, 94);
+
+}
+
+.header {
+    height: 6vh;
+}
+
+.commands {
+    width: 40%;
+    height: 3vh;
+    border-radius: 5px;
+    border: 1px solid #adadad;
+    margin: 0 calc(5% - 1px);
+    font-family: "Montserrat";
+    padding: 5px;
+    font-size: 12px;
+    outline: none;
+}
+
+.commbut {
+    font-weight: bold;
+    color: #fff;
+    font-size: 13px;
+    width: 8%;
+    height: 3vh;
+    border-radius: 5px;
+    background: rgb(43, 46, 94);
+    margin: 0 calc(1% - 1px);
+    cursor: pointer;
+    border: 1px solid rgb(43, 46, 94);
+    transition: 0.3s;
+}
+
+.commbut:hover {
+    background: rgb(255, 255, 255);
+    color: rgb(43, 46, 94);
+    border: 1px solid rgb(43, 46, 94);
+}
+
+.commbutr {
+    font-weight: bold;
+    color: #fff;
+    font-size: 13px;
+    width: 8%;
+    height: 3vh;
+    border-radius: 5px;
+    background: rgb(226, 88, 88);
+    margin: 0 1%;
+    cursor: pointer;
+    border: 1px solid rgb(226, 88, 88);
+    transition: 0.3s;
+}
+
+.commbutr:hover {
+    background: rgb(255, 255, 255);
+    color: rgb(226, 88, 88);
+    border: 1px solid rgb(226, 88, 88);
+}
+
+.data {
+    height: 40vh;
+}
+
+.logs {
+    width: 40%;
+    height: 35vh;
+    margin: 2.5% 5%;
+    border: 1px solid #adadad;
+    border-radius: 5px;
+}
+
+.map {
+    width: 40%;
+    height: 35vh;
+    margin: 2.5% 5%;
+    border: 1px solid #adadad;
+    border-radius: 5px;
+    transition: 0.5s
+}
+
+.map:hover {
+    width: 48%;
+    height: 39vh;
+    margin: 0.5% 1%;
+}
+
+.motors {
+    height: 40vh;
+    width: 100vw;
+}
+
+.motor {
+    width: 30vh;
+    height: 30vh;
+    background: rgb(43, 46, 94);
+    border-radius: 100%;
+    box-shadow: 0px 0px 20px 1px rgb(43, 46, 94);
+}
+
+.percentatge {
+    font-size: 60px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+.rpm {
+    margin-top: 10;
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    text-align: center;
+}
+
+.angle {
+    font-size: 30px;
+    width: 10%;
+}
+
+.spacer {
+    width: calc(100% - 60vh - 20vw - 15vw);
+}
+
+.servo {
+    width: 6%;
+    text-align: center;
+}
+
+.rservo {
+    width: 3vw;
+    height: 3vw;
+    margin: 8 1.5vw;
+    border: 1px solid #5e5e5e;
+    border-radius: 100%;
+}
