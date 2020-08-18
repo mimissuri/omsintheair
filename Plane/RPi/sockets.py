@@ -1,10 +1,7 @@
 import time
-import socketio
 
 import globals as g
 import logs as log
-
-g.sio = socketio.Client()
 
 
 @g.sio.event

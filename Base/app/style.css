@@ -17,9 +17,10 @@ body {
 }
 
 .topbar {
-    height: 1vh;
+    height: 15px;
     width: 100vw;
-
+    -webkit-app-region: drag;
+    z-index: 2000;
     background: rgb(43, 46, 94);
 
 }
@@ -85,11 +86,28 @@ body {
 }
 
 .logs {
+    padding: 10px;
+    font-size: 12px;
+    overflow: auto;
     width: 40%;
     height: 35vh;
     margin: 2.5% 5%;
     border: 1px solid #adadad;
     border-radius: 5px;
+}
+
+.logs::-webkit-scrollbar {
+    width: 2px;
+}
+
+.logs::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+.logs::-webkit-scrollbar-thumb {
+    background-color: #adadad;
+
+    outline: 1px solid slategrey;
 }
 
 .map {

@@ -13,15 +13,14 @@
     <div class="topbar"></div>
     <div class="header alcentre">
         <input type="text" class="commands" placeholder="Write command">
-        <div class="commbut alcentre">Start Motors</div>
-        <div class="commbut alcentre">Reset</div>
-        <div class="commbut alcentre">Stabilitzation:&nbsp<div style="font-weight: normal;">ON</div>
-        </div>
-        <div class="commbut alcentre">Open Package</div>
-        <div class="commbutr alcentre">Turn off</div>
+        <div class="commbut alcentre" onclick="commbutf(0)">Sleep</div>
+        <div class="commbut alcentre" onclick="commbutf(1)">Ping data</div>
+        <div class="commbut alcentre" onclick="commbutf(2)">Base controll</div>
+        <div class="commbut alcentre" onclick="commbutf(3)">LoRa</div>
+        <div class="commbutr alcentre" onclick="commbutf(99)">Reboot</div>
     </div>
     <div class="data alcentre">
-        <div class="logs"></div>
+        <div class="logs" id="logs"></div>
         <div class="map" id="map_id"></div>
     </div>
     <div class="motors alcentre">
@@ -61,6 +60,21 @@
 <script src="jquery.js"></script>
 <script src="leaflet.js"></script>
 <script>
+    const {
+        ipcRenderer
+    } = require('electron')
+
+    ipcRenderer.on('pingdata', (event, arg) => {
+        document.getElementById("logs").innerHTML = "<div>" + arg + "</div>" + document.getElementById("logs")
+            .innerHTML;
+    });
+    setInterval(function () {
+        ipcRenderer.send("pingdata", "xd");
+    }, 50);
+
+    function commbutf(value) {
+        ipcRenderer.send('commbuts', value);
+    }
     window.$ = window.jQuery = require('jquery');
     var latitud = 41.716379;
     var longitude = 1.8220914;

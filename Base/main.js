@@ -4,10 +4,13 @@ const {
 } = require('electron')
 const path = require('path')
 
+var last_data = "Put to sleep";
+var ndata = false
+
 function createWindow() {
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 720,
     frame: false,
     webPreferences: {
       webviewTag: true,
@@ -16,7 +19,6 @@ function createWindow() {
   })
 
   mainWindow.loadFile('app/index.html')
-  mainWindow.setFullScreen(true);
 }
 
 app.whenReady().then(() => {
@@ -54,39 +56,45 @@ server.listen(3000, function () {
 
 io.on("connect", function (socket) {
   var i = 0;
+  last_data = "Connected";
   console.log(socket.id);
   connected.push(socket.id);
+  ndata = true
 
   // ANCHOR Login 
   socket.on("login", function (data) {
     console.log(data);
     socket.emit("login", data);
+    ndata = true
   });
   socket.on("data", function (data) {
-    i++
     console.log(data);
-    if (i == 100) {
-      socket.emit("phase", 2);
-    }
+    last_data = data;
+    ndata = true
   });
 
   socket.on("disconnect", function () {
     var i = connected.indexOf(socket.id);
     console.log("Disconnected");
     connected.pop(i);
+    last_data = "Disconnected";
+    ndata = true
   });
 });
 
-const readline = require('readline');
 const {
-  NONAME
-} = require('dns')
+  ipcMain
+} = require('electron')
+ipcMain.on('pingdata', (event, arg) => {
+  if (ndata) {
+    ndata = false;
+    event.reply('pingdata', last_data);
+  }
+})
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-
-rl.on('line', (input) => {
-  io.to(connected[0]).emit('phase', input);
-});
+ipcMain.on('commbuts', (event, arg) => {
+  console.log(arg);
+  if (connected.length > 0) {
+    io.to(connected[0]).emit('phase', arg);
+  }
+})

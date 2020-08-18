@@ -8,7 +8,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 
 
 def initialize():
-    global debug, datetime, path, connected, phase, sip, sio, ndata
+    global debug, datetime, path, connected, phase, sip, sio, ndata, ports, lorap
     debug = True
     datetime = now
     path = dir_path
@@ -17,3 +17,4 @@ def initialize():
     sip = "http://192.168.1.200:3000"
     ndata = False
     sio = socketio.Client()
+    lorap = False
