@@ -87,8 +87,8 @@ const {
 } = require('electron')
 ipcMain.on('pingdata', (event, arg) => {
   if (ndata) {
-    ndata = false;
     event.reply('pingdata', last_data);
+    ndata = false;
   }
 })
 
@@ -96,5 +96,12 @@ ipcMain.on('commbuts', (event, arg) => {
   console.log(arg);
   if (connected.length > 0) {
     io.to(connected[0]).emit('phase', arg);
+  }
+})
+
+ipcMain.on('command', (event, arg) => {
+  console.log(arg);
+  if (connected.length > 0) {
+    io.to(connected[0]).emit('command', arg);
   }
 })

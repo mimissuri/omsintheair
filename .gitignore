@@ -4,5 +4,6 @@ Base/.vscode
 Base/node_modules
 Plane/RPi/__pycache__
 Plane/RPi/log
+Plane/RPi/pictures
 Plane/OPi/src/main
 Plane/OPi/logs

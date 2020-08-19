@@ -11,16 +11,18 @@ import sockets as sc
 import getdata as gd
 
 import serials as s
+import camera as cam
 
 
 def main():
     while True:
         # NOTE
-        # Phase 0: Sleepin  g
+        # Phase 0: Sleeping
         # Phase 1: Waiting, sending data at the same time via sockets.
         # Phase 2: Controlled by base
         # Phase 3: Waiting, sending data at the same time via LoRa.
         if g.phase == 0:
+            # Phase 0: Sleeping
             pass
         elif g.phase == 1:
             # Phase 1: Waiting, sending data at the same time via sockets.
@@ -40,11 +42,12 @@ def main():
         elif g.phase == 3:
             # Phase 3: Waiting, sending data at the same time via LoRa.
             if g.connected:
-                g.sio.disconnect()
                 g.connected = False
-                data = s.read_lora()
-                if data != False:
-                    pass
+                g.sio.disconnect()
+            data = s.read_lora()
+            log.log("Received: " + str(data))
+            if data != False:
+                s.write_lora("grrr")
         elif g.phase == 4:
             pass
         elif g.phase == 5:
@@ -67,18 +70,14 @@ if __name__ == "__main__":
         g.ports = s.scan()
         if len(g.ports) < 2:
             log.log("Just " + str(len(g.ports)) + " available")
-            sc.emit("data", "Just " + str(len(g.ports)) + " available")
         else:
             log.log(str(len(g.ports)) + " available")
-            sc.emit("data", str(len(g.ports)) + " available")
             s.setports()
             if g.lorap != False:
-                log.log("LoRa at " + g.lorap)
-                sc.emit("data", "LoRa at " + g.lorap)
+                log.log("LoRa at " + str(g.lorap))
                 break
             else:
                 log.log("Lora not found")
-                sc.emit("data", "LoRa not found")
 
         if not g.connected:
             try:

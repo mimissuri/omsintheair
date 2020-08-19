@@ -19,7 +19,12 @@ def setports():
 
 
 def read_lora():
-    if g.lorap.readable():
-        return g.lorap.read_until()
+    if g.lorap.in_waiting > 0:
+        data = g.lorap.read_until(b";")
+        return data
     else:
         return False
+
+
+def write_lora(data):
+    g.lorap.write(data.encode("UTF-8"))

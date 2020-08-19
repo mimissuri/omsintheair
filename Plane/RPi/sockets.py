@@ -2,6 +2,7 @@ import time
 
 import globals as g
 import logs as log
+import camera as cam
 
 
 @g.sio.event
@@ -27,13 +28,16 @@ def on_message(data):
     log.log("Changed to phase: " + str(g.phase))
 
 
+@g.sio.on("command")
+def on_message(data):
+    if data == "takepicture":
+        cam.save_picture()
+
+
 def connect_server():
     g.sio.connect(g.sip)
 
 
 def emit(rid, rarg):
     if g.connected:
-        log.log("Emiting on " + rid + " with values: " + str(rarg))
         g.sio.emit(rid, rarg)
-    else:
-        return False

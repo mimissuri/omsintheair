@@ -12,7 +12,7 @@
 <body>
     <div class="topbar"></div>
     <div class="header alcentre">
-        <input type="text" class="commands" placeholder="Write command">
+        <input type="text" class="commands" placeholder="Write command" id="input1">
         <div class="commbut alcentre" onclick="commbutf(0)">Sleep</div>
         <div class="commbut alcentre" onclick="commbutf(1)">Ping data</div>
         <div class="commbut alcentre" onclick="commbutf(2)">Base controll</div>
@@ -63,6 +63,7 @@
     const {
         ipcRenderer
     } = require('electron')
+    window.$ = window.jQuery = require('jquery');
 
     ipcRenderer.on('pingdata', (event, arg) => {
         document.getElementById("logs").innerHTML = "<div>" + arg + "</div>" + document.getElementById("logs")
@@ -75,7 +76,15 @@
     function commbutf(value) {
         ipcRenderer.send('commbuts', value);
     }
-    window.$ = window.jQuery = require('jquery');
+    var input = document.getElementById("input1");
+    input.addEventListener('keyup', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            ipcRenderer.send('command', input.value);
+            input.value = "";
+        }
+    });
+
+    // ANCHOR MAPAAA THIIINGS
     var latitud = 41.716379;
     var longitude = 1.8220914;
     $.get("http://ip-api.com/json", function (data, status) {
