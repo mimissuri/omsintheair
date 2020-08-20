@@ -30,8 +30,10 @@ def on_message(data):
 
 @g.sio.on("command")
 def on_message(data):
-    if data == "takepicture":
-        cam.save_picture()
+    try:
+        globals()[data]()
+    except:
+        log.log("Couldn't find: " + data)
 
 
 def connect_server():

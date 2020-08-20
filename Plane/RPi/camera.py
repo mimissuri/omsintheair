@@ -4,9 +4,6 @@ import logs as log
 
 from datetime import datetime
 
-if not g.camera.isOpened():
-    g.camera = False
-
 
 def save_picture():
     ret, frame = g.camera.read()

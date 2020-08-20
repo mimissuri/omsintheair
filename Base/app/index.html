@@ -9,116 +9,75 @@
     <title>Nose la vd</title>
 </head>
 
-<body>
-    <div class="topbar"></div>
-    <div class="header alcentre">
-        <input type="text" class="commands" placeholder="Write command" id="input1">
-        <div class="commbut alcentre" onclick="commbutf(0)">Sleep</div>
-        <div class="commbut alcentre" onclick="commbutf(1)">Ping data</div>
-        <div class="commbut alcentre" onclick="commbutf(2)">Base controll</div>
-        <div class="commbut alcentre" onclick="commbutf(3)">LoRa</div>
-        <div class="commbutr alcentre" onclick="commbutf(99)">Reboot</div>
+<body class="alcentre">
+    <div class="motorpow">
+        <div class="motorpowbar" id="leftmotor"></div>
     </div>
-    <div class="data alcentre">
-        <div class="logs" id="logs"></div>
-        <div class="map" id="map_id"></div>
-    </div>
-    <div class="motors alcentre">
-        <div class="motor alcentre">
-            <div>
-                <div class="percentatge">
-                    50
+    <div style="height: 100vh; width: 98vw">
+        <div class="topbar"></div>
+        <div class="header alcentre">
+            <input type="text" class="commands" placeholder="Write command" id="input1">
+            <div class="commbut alcentre" onclick="commbutf(0)">Sleep</div>
+            <div class="commbut alcentre" onclick="commbutf(1)">Ping data</div>
+            <div class="commbut alcentre" onclick="commbutf(2)">Base controll</div>
+            <div class="commbut alcentre" onclick="commbutf(3)">LoRa</div>
+            <div class="commbutr alcentre" onclick="commbutf(99)">Reboot</div>
+        </div>
+        <div class="data alcentre">
+            <div class="logs" id="logs"></div>
+            <div class="map" id="map_id"></div>
+        </div>
+        <div class="motors alcentre">
+            <div class="motor alcentre">
+                <div>
+                    <div class="percentatge">
+                        50
+                    </div>
+                    <div class="rpm">1278</div>
                 </div>
-                <div class="rpm">1278</div>
+            </div>
+            <div class="angle alcentre">60º</div>
+            <div class="spacer alcentre" id="spacer">
+                <div class="brujula alcentre" id="brujula">
+                    <div class="palo alcentre" id="palo">
+                        <div class="frontspeed" id="frontspeed"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="angle alcentre">60º</div>
+            <div class="motor alcentre">
+                <div>
+                    <div class="percentatge">
+                        50
+                    </div>
+                    <div class="rpm">1278</div>
+                </div>
             </div>
         </div>
-        <div class="angle alcentre">60º</div>
-        <div class="spacer"></div>
-        <div class="angle alcentre">60º</div>
-        <div class="motor alcentre">
-            <div>
-                <div class="percentatge">
-                    50
-                </div>
-                <div class="rpm">1278</div>
+        <div class="servos alcentre">
+            <div class="servo">L-Wing <div class="rservo alcentre">60</div>
+            </div>
+            <div class="servo">R-Wing<div class="rservo alcentre">60</div>
+            </div>
+            <div class="servo">Package<div class="rservo alcentre">60</div>
+            </div>
+            <div class="servo">V-Elevator<div class="rservo alcentre">60</div>
+            </div>
+            <div class="servo">H-Elevator<div class="rservo alcentre">60</div>
             </div>
         </div>
+        <div class="motorpowh alcentre">
+            <div class="motorpowbarh" id="waybar"></div>
+        </div>
     </div>
-    <div class="servos alcentre">
-        <div class="servo">L-Wing <div class="rservo alcentre">60</div>
-        </div>
-        <div class="servo">R-Wing<div class="rservo alcentre">60</div>
-        </div>
-        <div class="servo">Package<div class="rservo alcentre">60</div>
-        </div>
-        <div class="servo">V-Elevator<div class="rservo alcentre">60</div>
-        </div>
-        <div class="servo">H-Elevator<div class="rservo alcentre">60</div>
-        </div>
+    <div class="motorpow">
+        <div class="motorpowbar" id="rightmotor"></div>
     </div>
 </body>
 <script src="jquery.js"></script>
 <script src="leaflet.js"></script>
-<script>
-    const {
-        ipcRenderer
-    } = require('electron')
-    window.$ = window.jQuery = require('jquery');
-
-    ipcRenderer.on('pingdata', (event, arg) => {
-        document.getElementById("logs").innerHTML = "<div>" + arg + "</div>" + document.getElementById("logs")
-            .innerHTML;
-    });
-    setInterval(function () {
-        ipcRenderer.send("pingdata", "xd");
-    }, 50);
-
-    function commbutf(value) {
-        ipcRenderer.send('commbuts', value);
-    }
-    var input = document.getElementById("input1");
-    input.addEventListener('keyup', function (e) {
-        if (e.key === 'Enter' || e.keyCode === 13) {
-            ipcRenderer.send('command', input.value);
-            input.value = "";
-        }
-    });
-
-    // ANCHOR MAPAAA THIIINGS
-    var latitud = 41.716379;
-    var longitude = 1.8220914;
-    $.get("http://ip-api.com/json", function (data, status) {
-        console.log(data);
-        latitud = data["lat"];
-        longitude = data["lon"];
-    });
-    //Map
-    var ico_l = L.icon({
-        iconUrl: 'map-plane.png',
-        iconSize: [30, 30],
-    });
-    var mymap = L.map('map_id').setView([latitud, longitude], 14);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: 'OmsAndMoscas',
-        maxZoom: 18,
-        id: 'mapbox.streets',
-        style: "grayscale"
-    }).addTo(mymap);
-
-    marker = L.marker([latitud, longitude], {
-        icon: ico_l
-    }).addTo(mymap);
-    var marker;
-    //https://github.com/bbecquet/Leaflet.RotatedMarker INSTALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR
-    setInterval(() => {
-        mymap.removeLayer(marker);
-        latitud = latitud + 0.0001;
-        longitude = longitude + 0.0001;
-        marker = L.marker([latitud, longitude], {
-            rotationAngle: 180,
-            icon: ico_l
-        }).addTo(mymap);
-    }, 1000);
-</script>
+<script src="maps.js"></script>
+<script src="ipc.js"></script>
+<script src="gamepad.js"></script>
 
 </html>
