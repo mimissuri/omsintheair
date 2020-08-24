@@ -88,7 +88,6 @@ body {
 }
 
 .logs {
-    padding: 10px;
     font-size: 12px;
     overflow: auto;
     width: 40%;
@@ -229,4 +228,9 @@ body {
     height: 0%;
     margin-bottom: 0;
     background: rgb(224, 95, 72);
+}
+
+.imgns {
+    max-height: 100%;
+    display: none;
 }

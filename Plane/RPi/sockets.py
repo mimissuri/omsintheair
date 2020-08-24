@@ -9,6 +9,7 @@ import camera as cam
 def connect():
     log.log("Connected to server")
     g.connected = True
+    emit("login", "plane")
 
 
 @g.sio.event
@@ -33,7 +34,14 @@ def on_message(data):
     try:
         globals()[data]()
     except:
-        log.log("Couldn't find: " + data)
+        if data == "save_picture":
+            cam.save_picture()
+        elif data == "stream_video":
+            cam.stream_video()
+        elif data == "stop_stream":
+            g.stream_video = False
+        else:
+            log.log("Couldn't find: " + data)
 
 
 def connect_server():

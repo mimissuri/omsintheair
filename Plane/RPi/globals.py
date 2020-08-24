@@ -9,7 +9,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 
 
 def initialize():
-    global debug, datetime, path, connected, phase, sip, sio, ndata, ports, lorap, camera
+    global debug, datetime, path, connected, phase, sip, sio, ndata, ports, lorap, camera, stream_video
     debug = True
     datetime = now
     path = dir_path
@@ -21,3 +21,5 @@ def initialize():
     ports = False
     lorap = False
     camera = cv2.VideoCapture(0)
+    stream_video = False
+

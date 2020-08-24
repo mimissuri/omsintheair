@@ -13,6 +13,8 @@ import getdata as gd
 import serials as s
 import camera as cam
 
+import time
+
 
 def main():
     while True:
@@ -23,6 +25,7 @@ def main():
         # Phase 3: Waiting, sending data at the same time via LoRa.
         if g.phase == 0:
             # Phase 0: Sleeping
+            time.sleep(0.5)
             pass
         elif g.phase == 1:
             # Phase 1: Waiting, sending data at the same time via sockets.
@@ -45,7 +48,6 @@ def main():
                 g.connected = False
                 g.sio.disconnect()
             data = s.read_lora()
-            log.log("Received: " + str(data))
             if data != False:
                 s.write_lora("grrr")
         elif g.phase == 4:
