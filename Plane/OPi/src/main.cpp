@@ -13,7 +13,6 @@
 // SECTION - Used to define a region (See 'Hierarchical anchors')
 //============================================================================
 
-
 // SECTION Libraries
 #include <iostream>
 #include <cstdlib>
@@ -26,19 +25,22 @@ using namespace std;
 
 // SECTION Variables
 
-void exiting() {
+void exiting()
+{
 	myfile.close();
 	printx("Info", "Exiting");
 }
 
-
-int main() {
-	if (debug) {
-		myfile.open("logs/"+currentDateTime()+"-log.txt");
+int main()
+{
+	if (debug)
+	{
+		myfile.open("logs/" + currentDateTime() + "-log.txt");
 	}
 	atexit(exiting);
 	printx("Info", "Started");
-	while (true) {
+	while (true)
+	{
 		usleep(1000);
 	}
 	return 0;
