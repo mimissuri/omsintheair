@@ -6,10 +6,10 @@
 int main()
 {
     char byte;
-    int fd = open("/dev/ttyS0", O_RDWR);
+    int serial = open("/dev/ttyS0", O_RDWR | O_NOCTTY | O_SYNC);
     struct termios config;
     tcgetattr(fd, &config);
-    cfsetispeed(&config, B115200);
+    cfsetispeed(&config, B460800);
     tcsetattr(fd, TCSANOW, &config);
     write(fd, "X", 1);
     return 0;
