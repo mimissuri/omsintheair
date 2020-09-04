@@ -50,7 +50,7 @@ int main()
     int serial = open("/dev/ttyS0", O_RDWR | O_NOCTTY | O_SYNC);
     struct termios config;
     tcgetattr(serial, &config);
-    cfsetispeed(&config, B9600);
+    cfsetispeed(&config, B115200);
     tcsetattr(serial, TCSANOW, &config);
     while (true)
     {

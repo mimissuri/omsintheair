@@ -26,7 +26,7 @@ servo_max = int(input("Maximum: "))  # Max pulse length out of 4096
 # Helper function to make setting a servo pulse width simpler.
 def set_servo_pulse(channel, pulse):
     pulse_length = 1000000  # 1,000,000 us per second
-    pulse_length //= 60  # 50 Hz
+    pulse_length //= 50  # 50 Hz
     print("{0}us per period".format(pulse_length))
     pulse_length //= 4096  # 12 bits of resolution
     print("{0}us per bit".format(pulse_length))
@@ -41,7 +41,7 @@ pwm.set_pwm_freq(60)
 print("Moving servo on channel 0, press Ctrl-C to quit...")
 while True:
     # Move servo on channel O between extremes.
-    pwm.set_pwm(0, 0, servo_min)
-    time.sleep(1)
-    pwm.set_pwm(0, 0, servo_max)
-    time.sleep(1)
+    set_servo_pulse(0, servo_min)
+    time.sleep(2)
+    set_servo_pulse(0, servo_max)
+    time.sleep(2)
