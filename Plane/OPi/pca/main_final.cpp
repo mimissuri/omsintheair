@@ -95,77 +95,92 @@ int16_t i2c_readword(int privfile, uint8_t MSB, uint8_t LSB)
 #define PCA9685_DEFAULT_I2C_ADDR 0x40 // default i2c address for pca9685 默认i2c地址为0x40
 #define PCA9685_DEFAULT_I2C_BUS 1
 
+char *filename = "/dev/i2c-1";
+int file;
+
+void set_pwm_freq(int freq)
+{
+    uint8_t prescale = (CLOCK_FREQ / MAX_PWM_RES / freq) + 0.5;
+    uint8_t oldmode = i2c_read(file, MODE1);
+    uint8_t newmode = (oldmode & 0x7F) | 0x10; //sleep
+    i2c_write(file, MODE1, newmode);           // go to sleep
+    i2c_write(file, PRE_SCALE, prescale);
+    i2c_write(file, MODE1, oldmode);
+    usleep(100000);
+    i2c_write(file, MODE1, oldmode | 0xA1);
+}
+
+void pca_reset()
+{
+    i2c_write(file, MODE2, 0x04);
+    i2c_write(file, MODE1, 0x01);
+    usleep(100000);
+    i2c_write(file, MODE1, 0x00);
+}
+
 class pca
 {
 
 public:
-    int bus;
-    int file;
-    char *filename = "/dev/i2c-1";
+    float mres = 4912.0 / 32760.0;
+    int st1;
+    int st2;
+    int min_pwm;
+    int max_pwm;
+    int max_deg;
+    int pca_bus;
 
-    pca(int a) : bus(a)
+    pca(int a, int b, int c, int d) : pca_bus(a), min_pwm(b), max_pwm(c), max_deg(d)
     {
     }
 
-    int init()
+    void set_pwm(int on_value, int off_value)
     {
-        file = open(filename, O_RDWR);
-        if (ioctl(file, I2C_SLAVE, 0x40) < 0)
+        i2c_write(file, LED0_ON_L + LED_MULTIPLYER * pca_bus, on_value & 0xFF);
+        i2c_write(file, LED0_ON_H + LED_MULTIPLYER * pca_bus, on_value >> 8);
+        i2c_write(file, LED0_OFF_L + LED_MULTIPLYER * pca_bus, off_value & 0xFF);
+        i2c_write(file, LED0_OFF_H + LED_MULTIPLYER * pca_bus, off_value >> 8);
+    }
+    void rotate_deg(double deg)
+    {
+        if (deg < 0)
         {
-            exit(1);
+            set_pwm(0, min_pwm);
         }
-        //Config
-        reset();
-        usleep(100000);
-    }
-
-    void reset()
-    {
-        i2c_write(file, MODE2, 0x04);
-        i2c_write(file, MODE1, 0x01);
-        usleep(100000);
-        i2c_write(file, MODE1, 0x00);
-    }
-
-    void set_pwm_freq(int freq)
-    {
-        uint8_t prescale = (CLOCK_FREQ / MAX_PWM_RES / freq) + 0.5;
-        uint8_t oldmode = i2c_read(file, MODE1);
-        uint8_t newmode = (oldmode & 0x7F) | 0x10; //sleep
-        i2c_write(file, MODE1, newmode);           // go to sleep
-        i2c_write(file, PRE_SCALE, prescale);
-        i2c_write(file, MODE1, oldmode);
-        usleep(100000);
-        i2c_write(file, MODE1, oldmode | 0xA1);
-    }
-
-    void set_pwm(uint8_t led, int on_value, int off_value)
-    {
-        cout << "Rotating to:" << off_value
-             << "\n";
-        i2c_write(file, LED0_ON_L + LED_MULTIPLYER * led, on_value & 0xFF);
-        i2c_write(file, LED0_ON_H + LED_MULTIPLYER * led, on_value >> 8);
-        i2c_write(file, LED0_OFF_L + LED_MULTIPLYER * led, off_value & 0xFF);
-        i2c_write(file, LED0_OFF_H + LED_MULTIPLYER * led, off_value >> 8);
+        else if (deg > max_deg)
+        {
+            set_pwm(0, max_pwm);
+        }
+        else
+        {
+            int calc_pwm = min_pwm + deg * (max_pwm - min_pwm) / max_deg;
+            set_pwm(0, calc_pwm);
+        }
     }
 };
 
 int main()
 {
-    pca pca1(0);
-    pca1.init();
-    pca1.set_pwm_freq(50);
-    usleep(1000000);
-    int pwm;
+    file = open(filename, O_RDWR);
+    if (ioctl(file, I2C_SLAVE, 0x40) < 0)
+    {
+        exit(1);
+    }
+    pca_reset();
+    usleep(100000);
+    set_pwm_freq(50);
+    pca pca1(0, 70, 500, 180);
+    pca pca2(1, 70, 500, 180);
+    usleep(100000);
     while (true)
     {
-        cout << "Enter PWM: ";
-        cin >> pwm;
-        cout << "\n";
-        // 500 Working on on values 600-1000
-        // 0 Working on on values 68-510
-        pca1.set_pwm(0, 0, pwm);
+        pca1.rotate_deg(0);
+        pca2.rotate_deg(0);
+        usleep(1000000);
+        pca1.rotate_deg(180);
+        pca2.rotate_deg(180);
+        usleep(1000000);
     }
-    pca1.reset();
+    pca_reset();
     return 0;
 }

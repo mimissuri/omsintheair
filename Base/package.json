@@ -19,6 +19,9 @@
   },
   "dependencies": {
     "jquery": "^3.5.1",
-    "socket.io": "^2.3.0"
+    "nodejs-websocket": "^1.7.2",
+    "socket.io": "^2.3.0",
+    "websocket": "^1.0.32",
+    "ws": "^7.3.1"
   }
 }
