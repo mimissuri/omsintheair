@@ -1,13 +1,8 @@
-const WebSocket = require('ws');
+var http = require('http');
 
-const wss = new WebSocket.Server({
-    port: 8080
-});
-
-wss.on('connection', function connection(ws) {
-    ws.on('message', function incoming(message) {
-        console.log('received: %s', message);
-    });
-
-    ws.send('something');
-});
+//create a server object:
+http.createServer(function (req, res) {
+    console.log("Connection");
+  res.write('Hello World!'); //write a response to the client
+  res.end(); //end the response
+}).listen(8080);

@@ -47,10 +47,10 @@ int main()
     const char delim = ',';
     string::size_type sz;
 
-    int serial = open("/dev/ttyS0", O_RDWR | O_NOCTTY | O_SYNC);
+    int serial = open("/dev/ttyS3", O_RDWR | O_NOCTTY | O_SYNC);
     struct termios config;
     tcgetattr(serial, &config);
-    cfsetispeed(&config, B115200);
+    cfsetispeed(&config, B9600);
     tcsetattr(serial, TCSANOW, &config);
     while (true)
     {
