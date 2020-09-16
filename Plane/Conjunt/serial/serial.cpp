@@ -16,10 +16,10 @@ public:
     serial(char *a, speed_t br) : filename(a), baudrate(br)
     {
         cout << "Opened: " << filename << "\n";
-        ser = open(filename, O_RDWR | O_NOCTTY | O_SYNC);
+        ser = open("/dev/ttyS1", O_RDWR | O_NOCTTY | O_NONBLOCK|O_SYNC);
         struct termios config;
         tcgetattr(ser, &config);
-        cfsetispeed(&config, baudrate);
+        cfsetispeed(&config, B19200);
         tcsetattr(ser, TCSANOW, &config);
         cout << "Serial initialized"
              << "\n";
@@ -28,6 +28,7 @@ public:
     {
         string final_data;
         int no_data = 0;
+        for(int i = 0; i<4;i++){
         while (true)
         {
             no_data = 0;
@@ -47,8 +48,13 @@ public:
             }
             else
             {
-                return Convert(buff_char);
+                no_data++;
+                if (no_data == 50)
+                {
+                    cout << "Serial problem" << "\n";
+                }
             }
+        }
         }
         return final_data;
     }

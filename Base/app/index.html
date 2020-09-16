@@ -39,7 +39,7 @@
                     <div class="rpm">1278</div>
                 </div>
             </div>
-            <div class="angle alcentre">60º</div>
+            <div class="angle alcentre" id="m1servo">60º</div>
             <div class="spacer alcentre" id="spacer">
                 <div class="brujula alcentre" id="brujula">
                     <div class="palo alcentre" id="palo">
@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            <div class="angle alcentre">60º</div>
+            <div class="angle alcentre" id="m2servo">60º</div>
             <div class="motor alcentre">
                 <div>
                     <div class="percentatge">
@@ -58,15 +58,15 @@
             </div>
         </div>
         <div class="servos alcentre">
-            <div class="servo">L-Wing <div class="rservo alcentre">60</div>
+            <div class="servo">L-Wing <div class="rservo alcentre" id="lservo">60</div>
             </div>
-            <div class="servo">R-Wing<div class="rservo alcentre">60</div>
+            <div class="servo">R-Wing<div class="rservo alcentre" id="rservo">60</div>
             </div>
-            <div class="servo">Package<div class="rservo alcentre">60</div>
+            <div class="servo">Package<div class="rservo alcentre" id="pservo">60</div>
             </div>
-            <div class="servo">V-Elevator<div class="rservo alcentre">60</div>
+            <div class="servo">V-Elevator<div class="rservo alcentre" id="vservo">60</div>
             </div>
-            <div class="servo">H-Elevator<div class="rservo alcentre">60</div>
+            <div class="servo">H-Elevator<div class="rservo alcentre" id="hservo">60</div>
             </div>
         </div>
         <div class="motorpowh alcentre">
@@ -80,7 +80,37 @@
 <script src="jquery.js"></script>
 <script src="leaflet.js"></script>
 <script src="maps.js"></script>
-<script src="ipc.js"></script>
 <script src="gamepad.js"></script>
+<script src="https://cdn.socket.io/socket.io-2.3.0.js"></script>
+<script>
+    var socket = io("http://127.0.0.1:3000", {
+        path: '/'
+    });
+    socket.on('planedata', function (msg) {
+        document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML + msg;
+        document.getElementById("m1servo").innerHTML = msg["s1"];
+        document.getElementById("m2servo").innerHTML = msg["s2"];
+        document.getElementById("lservo").innerHTML = msg["s3"];
+        document.getElementById("rservo").innerHTML = msg["s4"];
+        document.getElementById("pservo").innerHTML = msg["s5"];
+        document.getElementById("vservo").innerHTML = msg["s6"];
+        document.getElementById("hservo").innerHTML = msg["s7"];
+        mymap.flyTo([msg["lat"], msg["long"]], 14)
+        var data = {
+            "phase": 0,
+            "m1": 0,
+            "m2": 0,
+            "s1": 0,
+            "s2": 0,
+            "s3": 0,
+            "s4": 0,
+            "s5": 0,
+            "s6": 0,
+            "s7": 0,
+        };
+
+        socket.emit("data", )
+    });
+</script>
 
 </html>

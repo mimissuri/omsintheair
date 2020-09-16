@@ -94,6 +94,7 @@ public:
 		read_mag();
 		read_accel();
 		read_gyro();
+
 	}
 	void read_mag()
 	{

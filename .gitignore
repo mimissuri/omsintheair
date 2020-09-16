@@ -2,6 +2,7 @@
 Plane/.vscode
 Base/.vscode
 Base/node_modules
+Server/node_modules
 Plane/RPi/__pycache__
 Plane/RPi/log
 Plane/RPi/pictures

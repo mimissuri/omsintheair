@@ -1,7 +1,9 @@
 using namespace std;
 extern "C"
 {
+#include <linux/i2c.h>
 #include <linux/i2c-dev.h>
+#include <i2c/smbus.h>
 }
 
 int16_t dataConv(int16_t data1, int16_t data2)

@@ -20,7 +20,7 @@ int main(void)
   {
     while (true)
     {
-      curl_easy_setopt(curl, CURLOPT_URL, "localhost:8080");
+      curl_easy_setopt(curl, CURLOPT_URL, "192.168.1.200:8080");
       curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
       curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
       res = curl_easy_perform(curl);
