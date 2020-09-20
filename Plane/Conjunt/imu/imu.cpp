@@ -15,7 +15,6 @@ class mpu
 
 public:
 	int bus;
-	bool ready;
 	int file;
 	int mpu_file;
 	char *filename = "/dev/i2c-0";
@@ -38,6 +37,7 @@ public:
 	float gyroZoff;
 	int st1;
 	int st2;
+	bool ready = false;
 
 	mpu(int a) : bus(a)
 	{
@@ -47,14 +47,13 @@ public:
 	{
 		file = open(filename, O_RDWR);
 		mpu_file = open(mpu_filename, O_RDWR);
-		if (ioctl(file, I2C_SLAVE, 0x0c) < 0)
-		{
-			cout << "Couldnt read";
-		}
 		if (ioctl(mpu_file, I2C_SLAVE, 0x68) < 0)
 		{
-			cout << "Couldnt read";
+			cout << "Couldn't initialize MPU9250" << endl;
+			ready = false;
+			return 0;
 		}
+		ready = true;
 		//MPU CONIG
 		i2c_write(mpu_file, PWR_MGMT_1, 0x00);
 		usleep(100000);
@@ -71,6 +70,13 @@ public:
 		usleep(100000);
 
 		//AK CONFIG
+
+		if (ioctl(file, I2C_SLAVE, 0x0c) < 0)
+		{
+			cout << "Couldn't initialize AK8963" << endl;
+			ready = false;
+			return 0;
+		}
 		i2c_write(file, AK8963_CNTL1, 0x00);
 		usleep(100000);
 		i2c_write(file, AK8963_CNTL1, 0x0F);
@@ -90,11 +96,16 @@ public:
 	}
 	void read_raw()
 	{
-
-		read_mag();
-		read_accel();
-		read_gyro();
-
+		if (!ready)
+		{
+			init();
+		}
+		else
+		{
+			read_mag();
+			read_accel();
+			read_gyro();
+		}
 	}
 	void read_mag()
 	{

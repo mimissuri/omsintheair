@@ -69,6 +69,7 @@ int main()
                 string gps_data = gps.read_until("\n");
                 cout << gps_data << endl;
             }
+            cout << "we good" << endl;
             mpu1.read_raw();
             servo0_deg++;
             servo0.rotate_deg(servo0_deg);
@@ -82,6 +83,7 @@ int main()
             motor2.rotate_deg(motor2_deg);
             string data = "?m1=" + to_string(motor1_deg) + "&m2=" + to_string(motor2_deg) + "&s1=" + to_string(servo0_deg) + "&s2=" + to_string(servo1_deg) + "&s3=" + to_string(servo2_deg) + "&s4=" + to_string(servo3_deg) + "&s5=" + to_string(servo4_deg) + "&s6=" + to_string(servo5_deg) + "&s7=" + to_string(servo6_deg) + "&lat=42&long=2&alt=200&packet_id=" + to_string(loop_id);
             communicate(data);
+            cout << data << endl;
             clock_t c_end = clock();
             auto t_end = high_resolution_clock::now();
             double time = duration<double, micro>(t_end - t_start).count();

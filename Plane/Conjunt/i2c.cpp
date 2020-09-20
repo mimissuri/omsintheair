@@ -3,9 +3,8 @@ extern "C"
 {
 #include <linux/i2c.h>
 #include <linux/i2c-dev.h>
-#include <i2c/smbus.h>
 }
-
+char false_char = char(32);
 int16_t dataConv(int16_t data1, int16_t data2)
 {
     int16_t value = data1 | (data2 << 8);
@@ -15,7 +14,7 @@ int16_t dataConv(int16_t data1, int16_t data2)
     }
     return value;
 }
-void i2c_write(int privfile, __u8 reg_address, __u8 val)
+bool i2c_write(int privfile, __u8 reg_address, __u8 val)
 {
     char buf[2];
 
@@ -24,9 +23,9 @@ void i2c_write(int privfile, __u8 reg_address, __u8 val)
 
     if (write(privfile, buf, 2) != 2)
     {
-        printf("Error, unable to write to i2c device\n");
-        exit(1);
+        return false;
     }
+    return true;
 }
 
 char i2c_read(int privfile, uint8_t reg_address)
@@ -41,8 +40,7 @@ char i2c_read(int privfile, uint8_t reg_address)
     }
     if (read(privfile, buf, 1) != 1)
     {
-        printf("Error, unable to read from i2c device\n");
-        exit(1);
+        return false_char;
     }
 
     return buf[0];
