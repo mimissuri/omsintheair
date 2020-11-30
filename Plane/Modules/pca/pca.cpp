@@ -55,14 +55,10 @@ class pca
 {
 
 public:
-    float mres = 4912.0 / 32760.0;
-    int st1;
-    int st2;
     int min_pwm;
     int max_pwm;
     int max_deg;
     int pca_bus;
-    bool ready = false;
 
     pca(int a, int b, int c, int d) : pca_bus(a), min_pwm(b), max_pwm(c), max_deg(d)
     {
@@ -77,7 +73,7 @@ public:
     }
     void rotate_deg(double deg)
     {
-        if (ready)
+        if (pca_ready)
         {
             if (deg < 0)
             {

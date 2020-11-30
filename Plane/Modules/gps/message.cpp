@@ -54,7 +54,7 @@ int main()
     tcsetattr(serial, TCSANOW, &config);
     while (true)
     {
-        char buffer[0];
+        char buffer[1];
         string final;
         while (true)
         {

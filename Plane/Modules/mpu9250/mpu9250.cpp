@@ -10,7 +10,8 @@ using namespace std;
 #define INT_PIN_CFG 0x37
 #define AK8963_CNTL1 0x0A
 #define AK8963_ASAX 0x10
-class mpu
+
+class mpu9250
 {
 
 public:
@@ -39,7 +40,7 @@ public:
 	int st2;
 	bool ready = false;
 
-	mpu(int a) : bus(a)
+	mpu9250(int a) : bus(a)
 	{
 	}
 
@@ -53,24 +54,19 @@ public:
 			ready = false;
 			return 0;
 		}
-		ready = true;
+
 		//MPU CONIG
 		i2c_write(mpu_file, PWR_MGMT_1, 0x00);
-		usleep(100000);
 		i2c_write(mpu_file, PWR_MGMT_1, 0x01);
-		usleep(100000);
 		i2c_write(mpu_file, CONFIG, 0x00);
 		i2c_write(mpu_file, SMPLRT_DIV, 0x00);
-		i2c_write(mpu_file, GYRO_CONFIG, 0x00);
-		i2c_write(mpu_file, ACCEL_CONFIG, 0x00);
+		i2c_write(mpu_file, GYRO_CONFIG, 0x00);	 // 250º -> /131.072
+		i2c_write(mpu_file, ACCEL_CONFIG, 0x00); // 4g -> /8192.0
 		i2c_write(mpu_file, ACCEL_CONFIG_2, 0x00);
 		i2c_write(mpu_file, INT_PIN_CFG, 0x02);
-		usleep(100000);
 		i2c_write(mpu_file, USER_CTRL, 0x00);
-		usleep(100000);
 
 		//AK CONFIG
-
 		if (ioctl(file, I2C_SLAVE, 0x0c) < 0)
 		{
 			cout << "Couldn't initialize AK8963" << endl;
@@ -78,9 +74,8 @@ public:
 			return 0;
 		}
 		i2c_write(file, AK8963_CNTL1, 0x00);
-		usleep(100000);
 		i2c_write(file, AK8963_CNTL1, 0x0F);
-		usleep(100000);
+
 		__u8 buf[3];
 		buf[0] = i2c_read(file, AK8963_ASAX);
 		buf[1] = i2c_read(file, AK8963_ASAX + 1);
@@ -88,11 +83,12 @@ public:
 		magXc = (buf[0] - 128) / 256.0 + 1.0;
 		magYc = (buf[1] - 128) / 256.0 + 1.0;
 		magZc = (buf[2] - 128) / 256.0 + 1.0;
+
 		i2c_write(file, AK8963_CNTL1, 0x00);
-		usleep(100000);
 		i2c_write(file, AK8963_CNTL1, 0x16);
-		cout << "IMU initialized"
-			 << "\n";
+
+		ready = true;
+		return 0;
 	}
 	void read_raw()
 	{
@@ -142,9 +138,9 @@ public:
 		buf[3] = i2c_read(mpu_file, 0x3E);
 		buf[4] = i2c_read(mpu_file, 0x3F);
 		buf[5] = i2c_read(mpu_file, 0x40);
-		accX = dataConv(buf[1], buf[0]) / 16384.0;
-		accY = dataConv(buf[3], buf[2]) / 16384.0;
-		accZ = dataConv(buf[5], buf[4]) / 16384.0;
+		accX = dataConv(buf[1], buf[0]) / 8192.0;
+		accY = dataConv(buf[3], buf[2]) / 8192.0;
+		accZ = dataConv(buf[5], buf[4]) / 8192.0;
 	}
 	void read_gyro()
 	{
@@ -155,33 +151,8 @@ public:
 		buf[3] = i2c_read(mpu_file, 0x46);
 		buf[4] = i2c_read(mpu_file, 0x47);
 		buf[5] = i2c_read(mpu_file, 0x48);
-		gyroX = dataConv(buf[1], buf[0]) / 131.0;
-		gyroY = dataConv(buf[3], buf[2]) / 131.0;
-		gyroZ = dataConv(buf[5], buf[4]) / 131.0;
+		gyroX = dataConv(buf[1], buf[0]) / 131.072;
+		gyroY = dataConv(buf[3], buf[2]) / 131.072;
+		gyroZ = dataConv(buf[5], buf[4]) / 131.072;
 	}
 };
-/*
-int main()
-{
-	printf("Bon dia\n");
-	mpu mpu1(0);
-	mpu1.init();
-	Mahony filter;
-	while (true)
-	{
-		mpu1.read_raw();
-		cout
-			<< '\r'
-			<< std::setw(10) << std::setfill(' ') << mpu1.accX << '\t'
-			<< std::setw(10) << std::setfill(' ') << mpu1.accY << '\t'
-			<< std::setw(10) << std::setfill(' ') << mpu1.accZ << '\t'
-			<< std::setw(10) << std::setfill(' ') << mpu1.gyroX << '\t'
-			<< std::setw(10) << std::setfill(' ') << mpu1.gyroY << '\t'
-			<< std::setw(10) << std::setfill(' ') << mpu1.gyroZ << '\t'
-			<< std::setw(10) << std::setfill(' ') << mpu1.magX << '\t'
-			<< std::setw(10) << std::setfill(' ') << mpu1.magY << '\t'
-			<< std::setw(10) << std::setfill(' ') << mpu1.magZ << '\t'
-			<< std::flush;
-	}
-	return 0;
-}*/

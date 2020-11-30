@@ -1,6 +1,0 @@
-opencv-python
-pyserial
-python-socketio
-adafruit-blinka
-adafruit-circuitpython-pca9685
-adafruit-circuitpython-motor
