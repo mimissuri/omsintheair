@@ -12,18 +12,29 @@
 
 ## Install
 
-```sh
-Base: npm install
-```
+For the base programs, use the package manager [npm](https://www.npmjs.com/get-npm) to install the packages needed.
 
-```sh
-Airplane: c++ main.cpp -o main -pthread -lcurl
+```bash
+npm install
+```
+For the airplane software:
+
+```bash
+c++ main.cpp -o main -pthread -lcurl
 ```
 
 ## Usage
 
-```sh
-Start runing base first
+Base:
+
+```bash
+npm start
+```
+
+Airplane:
+
+```bash
+./main
 ```
 
 ## Author
