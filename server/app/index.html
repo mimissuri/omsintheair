@@ -1,0 +1,218 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="stl_viewer.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>OmsInTheAir</title>
+</head>
+
+<body style="margin: 0 0">
+    <div class="data">
+        <div class="datat alcentre">hmmmmm</div>
+        <div class="datad">
+            <div class="data_title">Pitch:&nbsp</div>
+            <div class="data_data" id="pitch">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Roll:&nbsp</div>
+            <div class="data_data" id="roll">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Yaw:&nbsp</div>
+            <div class="data_data" id="yaw">-,---</div>
+        </div>
+        <div style="height: 20px;"></div>
+        <div class="datad">
+            <div class="data_title">Acc-X-1:&nbsp</div>
+            <div class="data_data" id="accx1">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Acc-Y-1:&nbsp</div>
+            <div class="data_data" id="accy1">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Acc-Z-1:&nbsp</div>
+            <div class="data_data" id="accz1">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Gyro-X-1:&nbsp</div>
+            <div class="data_data" id="gyrox1">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Gyro-Y-1:&nbsp</div>
+            <div class="data_data" id="gyroy1">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Gyro-Z-1:&nbsp</div>
+            <div class="data_data" id="gyroz1">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Mag-X-1:&nbsp</div>
+            <div class="data_data" id="magx1">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Mag-Y-1:&nbsp</div>
+            <div class="data_data" id="magy1">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Mag-Z-1:&nbsp</div>
+            <div class="data_data" id="magz1">-,---</div>
+        </div>
+        <div style="height: 20px;"></div>
+        <div class="datad">
+            <div class="data_title">Acc-X-2:&nbsp</div>
+            <div class="data_data" id="accx2">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Acc-Y-2:&nbsp</div>
+            <div class="data_data" id="accy2">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Acc-Z-2:&nbsp</div>
+            <div class="data_data" id="accz2">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Gyro-X-2:&nbsp</div>
+            <div class="data_data" id="gyrox2">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Gyro-Y-2:&nbsp</div>
+            <div class="data_data" id="gyroy2">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Gyro-Z-2:&nbsp</div>
+            <div class="data_data" id="gyroz2">-,---</div>
+        </div>
+        <div style="height: 20px;"></div>
+        <div class="datad">
+            <div class="data_title">Acc-X-3:&nbsp</div>
+            <div class="data_data" id="accx3">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Acc-Y-3:&nbsp</div>
+            <div class="data_data" id="accy3">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Acc-Z-3:&nbsp</div>
+            <div class="data_data" id="accz3">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Gyro-X-3:&nbsp</div>
+            <div class="data_data" id="gyrox3">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Gyro-Y-3:&nbsp</div>
+            <div class="data_data" id="gyroy3">-,---</div>
+        </div>
+        <div class="datad">
+            <div class="data_title">Gyro-Z-3:&nbsp</div>
+            <div class="data_data" id="gyroz3">-,---</div>
+        </div>
+    </div>
+    <div id="stl_cont" style="width:90%;height:100%;margin-left:5%;"></div>
+
+    <script>
+        const socket = io('https://omsintheairserver.herokuapp.com');
+
+        var stl_viewer = new StlViewer(
+            document.getElementById("stl_cont"), {
+            allow_drag_and_drop: false,
+            models: [{
+                id: 0,
+                filename: "yeye.STL",
+                opacity: 0.8,
+                z: 10,
+                color: "#000",
+                view_edges: true
+            }, {
+                id: 1,
+                filename: "yeye.STL",
+                opacity: 0.3,
+                z: 10,
+                color: "#BF4141",
+            }, {
+                id: 2,
+                filename: "yeye.STL",
+                opacity: 0.3,
+                z: 10,
+                color: "#63BF41",
+            }, {
+                id: 3,
+                filename: "yeye.STL",
+                opacity: 0.3,
+                z: 10,
+                color: "#41A0BF",
+            },]
+        }
+        );
+
+        var pitch_m1 = 0;
+        var pitch_m2 = 0;
+        var pitch_m3 = 0;
+        var pitch_gi = 0;
+        var roll_m1 = 0;
+        var roll_m2 = 0;
+        var roll_m3 = 0;
+        var roll_gi = 0;
+        var yaw_m1 = 0;
+        var yaw_m2 = 0;
+        var yaw_m3 = 0;
+        var yaw_gi = 0;
+        socket.on('planedata', function (msg) {
+            console.log(msg);
+            stl_viewer.rotate(0, msg["pitch_gi"] - pitch_gi, msg["yaw_gi"] - yaw_gi, msg["roll_gi"] - roll_gi);
+            stl_viewer.rotate(1, msg["pitch_m1"] - pitch_m1, msg["yaw_m1"] - yaw_m1, msg["roll_m1"] - roll_m1);
+            stl_viewer.rotate(2, msg["pitch_m2"] - pitch_m2, msg["yaw_m2"] - yaw_m2, msg["roll_m2"] - roll_m2);
+            stl_viewer.rotate(3, msg["pitch_m3"] - pitch_m3, msg["yaw_m3"] - yaw_m3, msg["roll_m3"] - roll_m3);
+
+            pitch_m1 = msg["pitch_m1"];
+            pitch_m2 = msg["pitch_m2"];
+            pitch_m3 = msg["pitch_m3"];
+            pitch_gi = msg["pitch_gi"];
+            roll_m1 = msg["roll_m1"];
+            roll_m2 = msg["roll_m2"];
+            roll_m3 = msg["roll_m3"];
+            roll_gi = msg["roll_gi"];
+            yaw_m1 = msg["yaw_m1"];
+            yaw_m2 = msg["yaw_m2"];
+            yaw_m3 = msg["yaw_m3"];
+            yaw_gi = msg["yaw_gi"];
+
+            document.getElementById("accx1").innerHTML = msg["accx_m3"];
+            document.getElementById("accy1").innerHTML = msg["accy_m3"];
+            document.getElementById("accz1").innerHTML = msg["accz_m3"];
+            document.getElementById("gyrox1").innerHTML = msg["gyrox_m3"];
+            document.getElementById("gyroy1").innerHTML = msg["gyroy_m3"];
+            document.getElementById("gyroz1").innerHTML = msg["gyroz_m3"];
+            document.getElementById("magx1").innerHTML = msg["magx_m3"];
+            document.getElementById("magy1").innerHTML = msg["magy_m3"];
+            document.getElementById("magz1").innerHTML = msg["magz_m3"];
+
+            document.getElementById("accx2").innerHTML = msg["accx_m1"];
+            document.getElementById("accy2").innerHTML = msg["accy_m1"];
+            document.getElementById("accz2").innerHTML = msg["accz_m1"];
+            document.getElementById("gyrox2").innerHTML = msg["gyrox_m1"];
+            document.getElementById("gyroy2").innerHTML = msg["gyroy_m1"];
+            document.getElementById("gyroz2").innerHTML = msg["gyroz_m1"];
+
+            document.getElementById("accx3").innerHTML = msg["accx_m2"];
+            document.getElementById("accy3").innerHTML = msg["accy_m2"];
+            document.getElementById("accz3").innerHTML = msg["accz_m2"];
+            document.getElementById("gyrox3").innerHTML = msg["gyrox_m2"];
+            document.getElementById("gyroy3").innerHTML = msg["gyroy_m2"];
+            document.getElementById("gyroz3").innerHTML = msg["gyroz_m2"];
+
+            document.getElementById("pitch").innerHTML = msg["pitch_gi"] + "rads";
+            document.getElementById("roll").innerHTML = msg["roll_gi"] + "rads";
+            document.getElementById("yaw").innerHTML = msg["yaw_gi"] + "rads";
+        });
+    </script>
+
+</body>
+
+</html>

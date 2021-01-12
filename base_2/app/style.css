@@ -1,0 +1,247 @@
+body {
+    font-family: "Montserrat";
+    margin: 0 0;
+    user-select: none;
+    background: #fff;
+    overflow: hidden;
+
+}
+
+.alcentre {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    width: 100%;
+    height: 100vh;
+}
+
+.topbar {
+    height: 15px;
+    width: 100%;
+    -webkit-app-region: drag;
+    z-index: 2000;
+    background: rgb(43, 46, 94);
+
+}
+
+.header {
+    height: 6vh;
+}
+
+.commands {
+    width: 40%;
+    height: 3vh;
+    border-radius: 5px;
+    border: 1px solid #adadad;
+    margin: 0 calc(5% - 2px);
+    margin-right: calc(2.5% - 1px);
+    font-family: "Montserrat";
+    padding: 5px;
+    font-size: 12px;
+    outline: none;
+}
+
+.commbut {
+    font-weight: bold;
+    color: #fff;
+    font-size: 13px;
+    width: 8%;
+    height: 3vh;
+    border-radius: 5px;
+    background: rgb(43, 46, 94);
+    margin: 0 calc(1% - 1px);
+    cursor: pointer;
+    border: 1px solid rgb(43, 46, 94);
+    transition: 0.3s;
+}
+
+.commbut:hover {
+    background: rgb(255, 255, 255);
+    color: rgb(43, 46, 94);
+    border: 1px solid rgb(43, 46, 94);
+}
+
+.commbutr {
+    font-weight: bold;
+    color: #fff;
+    font-size: 13px;
+    width: 8%;
+    height: 3vh;
+    border-radius: 5px;
+    background: rgb(226, 88, 88);
+    margin: 0 1%;
+    margin-right: 3%;
+    cursor: pointer;
+    border: 1px solid rgb(226, 88, 88);
+    transition: 0.3s;
+}
+
+.commbutr:hover {
+    background: rgb(255, 255, 255);
+    color: rgb(226, 88, 88);
+    border: 1px solid rgb(226, 88, 88);
+}
+
+.data {
+    height: 40vh;
+}
+
+.logs {
+    font-size: 12px;
+    overflow: auto;
+    width: 40%;
+    height: 35vh;
+    margin: 0 5%;
+}
+
+.delokos{
+    width: 33.33333%;
+    margin: 0% 0;
+    height: 7vh;
+    border-radius: 5px; 
+}
+.nene{
+    height: 50%;
+    width: 100%;
+    color: #fff;
+    font-weight: bold;
+    font-size: 13px;
+    border-radius: 5px; 
+}
+
+.datos{
+    height: 50%;
+    background-color: white;
+    width: 100%;
+    font-weight: bold;
+    font-size: 13px;
+
+
+}
+
+.map {
+    width: 40%;
+    height: 35vh;
+    margin: 2.5% 5%;
+    border: 1px solid #adadad;
+    border-radius: 5px;
+    transition: 0.5s
+}
+
+.map:hover {
+    width: 48%;
+    height: 39vh;
+    margin: 0.5% 1%;
+}
+
+.motors {
+    height: 40vh;
+    width: 100%;
+}
+
+.motor {
+    width: 25vh;
+    height: 25vh;
+    background: rgb(43, 46, 94);
+    border-radius: 100%;
+    box-shadow: 0px 0px 20px 1px rgb(43, 46, 94);
+}
+
+.percentatge {
+    font-size: 60px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+.rpm {
+    margin-top: 10;
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    text-align: center;
+}
+
+.angle {
+    font-size: 30px;
+    width: 5%;
+}
+
+.spacer {
+    width: calc(100% - 50vh - 10vw - 15vw);
+    height: 40vh;
+}
+
+.servo {
+    width: 6%;
+    text-align: center;
+}
+
+.rservo {
+    width: 3vw;
+    height: 3vw;
+    margin: 8 1.5vw;
+    border: 1px solid #5e5e5e;
+    border-radius: 100%;
+}
+
+.motorpow {
+    width: 1vw;
+    height: 100vh;
+    display: flex;
+    align-items: flex-end;
+}
+
+.motorpowbar {
+    width: 1vw;
+    height: 0vh;
+    background: rgb(63, 63, 63);
+    z-index: 2000;
+}
+
+.motorpowh {
+    margin-top: 2vh;
+    width: 100%;
+    height: 1vw;
+}
+
+.motorpowbarh {
+    width: 0%;
+    height: 1vw;
+    background: rgb(224, 95, 72);
+    z-index: 2000;
+}
+
+.brujula {
+    --size: calc((100% - 60vh - 20vw - 15vw)/2);
+    width: 10vw;
+    height: 10vw;
+    border-radius: 100%;
+    background: #adadad;
+    transition: 0.1s;
+    border: 1px solid #fff;
+}
+
+.palo {
+    width: 8px;
+    border-radius: 2px;
+    height: 7vw;
+    background: #fff;
+    transition: 0.1s;
+}
+
+.frontspeed {
+    width: 8px;
+    transition: 0.1s;
+    height: 0%;
+    margin-bottom: 0;
+    background: rgb(224, 95, 72);
+}
+
+.imgns {
+    max-height: 100%;
+    display: none;
+}

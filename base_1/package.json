@@ -1,0 +1,28 @@
+{
+  "name": "omsintheair",
+  "version": "1.0.0",
+  "description": "OmsInTheAir auto app",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "install": "electron-rebuild"
+  },
+  "repository": "https://github.com/adamthecro/oita_base_1",
+  "keywords": [
+    "base_1",
+    "omsintheair",
+    "base",
+    "base birdroni"
+  ],
+  "author": "Adam El Messaoudi Aarab",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^9.3.1",
+    "electron-rebuild": "^1.11.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "jquery.terminal": "^2.20.1",
+    "socket.io": "^2.3.0"
+  }
+}

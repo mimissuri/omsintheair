@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A*</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=MuseoModerno:wght@900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="margin: 0 0; overflow: hidden; display: flex;">
+    <canvas id="canvas" style="width: 100vh; height: 100vh;">
+
+    </canvas>
+    <div class="data">
+        <div class="data_card alcentre">
+            <div class="data_text">
+                <div class="title_data">Start</div>
+                <div id="start"></div>
+            </div>
+            <div class="data_text">
+                <div class="title_data">End</div>
+                <div id="end"></div>
+            </div>
+        </div>
+        <div class="data_card alcentre">
+            <div class="data_text">
+                <div class="title_data">OpenSet</div>
+                <div id="OpenSet"></div>
+            </div>
+            <div class="data_text">
+                <div class="title_data">ClosedSet</div>
+                <div id="ClosedSet"></div>
+            </div>
+        </div>
+        <div class="data_card alcentre">
+            <div class="data_text">
+                <div class="title_data">Path Length</div>
+                <div id="path"></div>
+            </div>
+            <div class="data_text">
+                <div class="title_data">Current</div>
+                <div id="current"></div>
+            </div>
+        </div>
+        <div class="data_card alcentre">
+            <div class="data_text">
+                <div class="title_data">Operations</div>
+                <div id="operations"></div>
+            </div>
+            <div class="data_text">
+                <div class="title_data">Time</div>
+                <div id="time"></div>
+            </div>
+        </div>
+        <div class="reset alcentre" onclick="reset()">Reset</div>
+    </div>
+</body>
+<script src="main.js"></script>
+</html>
