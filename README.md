@@ -16,6 +16,10 @@
 Base: npm install
 ```
 
+```sh
+Airplane: c++ main.cpp -o main -pthread -lcurl
+```
+
 ## Usage
 
 ```sh
